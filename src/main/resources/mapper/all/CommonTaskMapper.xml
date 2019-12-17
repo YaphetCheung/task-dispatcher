@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="priv.yanfei.task.all.mapper.CommonTaskMapper">
+
+
+    <update id="updateHangTasksByIp">
+        update
+            common_task
+        set
+            task_status = 'init',
+            update_time = now(),
+            next_exec_time = #{nextExecTime,jdbcType=TIMESTAMP}
+        where
+                last_host = #{lastHost,jdbcType=VARCHAR}
+            and
+                task_status = 'exec'
+    </update>
+
+    <update id="markTaskFail">
+        update
+            common_task
+        set
+            task_status = 'fail',
+            exec_times = exec_times + 1,
+            update_time = now(),
+            memo = #{msg,jdbcType=VARCHAR}
+        where
+            task_no = #{taskNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="markTaskSucc">
+        update
+            common_task
+        set
+            task_status = 'succ',
+            exec_times = exec_times + 1,
+            update_time = now()
+        where
+            task_no = #{taskNo,jdbcType=VARCHAR}
+    </update>
+
+    <update id="markTaskExcp">
+        update
+            common_task
+        set
+            task_status = 'init',
+            exec_times = exec_times + 1,
+            update_time = now(),
+            next_exec_time = #{nextExecTime,jdbcType=TIMESTAMP},
+            memo = #{msg,jdbcType=VARCHAR}
+        where
+            task_no = #{taskNo,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="selectInitTasks" resultType="priv.yanfei.task.all.entity.CommonTask">
+        select
+            id,
+            task_no,
+            task_type,
+            task_status,
+            task_context,
+            exec_times,
+            last_exec_time,
+            next_exec_time,
+            memo,
+            env,
+            last_host
+        from
+            common_task
+        where
+            task_status = 'init'
+        and
+            env = #{env,jdbcType=VARCHAR}
+        and
+            next_exec_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+    </select>
+
+    <update id="updateTaskExec">
+        update
+            common_task
+        set
+            task_status = 'exec',
+            last_exec_time = now(),
+            update_time = now(),
+            last_host = #{hostIp,jdbcType=VARCHAR}
+        where
+            task_no
+        in
+            <foreach collection="taskNos" item="taskNo" index="index"
+                     open="(" close=")" separator=",">
+                #{taskNo,jdbcType=VARCHAR}
+            </foreach>
+    </update>
+
+
+</mapper>
