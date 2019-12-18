@@ -26,7 +26,7 @@ public interface CommonTaskMapper extends BaseMapper<CommonTask> {
 
     Integer markTaskExcp(@Param("taskNo") String taskNo, @Param("nextExecTime") LocalDateTime nextExecTime, @Param("msg") String msg);
 
-    List<CommonTask> selectInitTasks(@Param("env") String env, @Param("nowTime") LocalDateTime nowTime);
+    List<CommonTask> selectInitTasks(@Param("env") String env, @Param("nowTime") LocalDateTime nowTime, @Param("size") Integer size);
 
-    Integer updateTaskExec(@Param("taskNos") List<String> taskNos,@Param("hostIp") String hostIp);
+    Integer updateTaskExec(@Param("taskNos") List<String> taskNos, @Param("hostIp") String hostIp);
 }

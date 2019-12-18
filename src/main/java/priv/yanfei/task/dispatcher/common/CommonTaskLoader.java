@@ -41,7 +41,7 @@ public class CommonTaskLoader extends AbstractTaskLoader {
     protected List loadTodoTasks(int size) {
 
         return transactionTemplate.execute(status -> {
-            List<CommonTask> commonTasks = commonTaskMapper.selectInitTasks(env, SystemDateUtil.getSystemDate());
+            List<CommonTask> commonTasks = commonTaskMapper.selectInitTasks(env, SystemDateUtil.getSystemDate(), size);
 
             if (CollUtil.isEmpty(commonTasks)) {
                 return CollUtil.newArrayList();

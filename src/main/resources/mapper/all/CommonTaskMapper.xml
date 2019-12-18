@@ -74,6 +74,7 @@
             env = #{env,jdbcType=VARCHAR}
         and
             next_exec_time &lt;= #{nowTime,jdbcType=TIMESTAMP}
+        limit #{size,jdbcType=INTEGER}
     </select>
 
     <update id="updateTaskExec">

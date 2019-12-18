@@ -1,6 +1,8 @@
 package priv.yanfei.task.all.entity;
 
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import priv.yanfei.task.common.model.BaseModel;
 
 /**
@@ -18,6 +20,7 @@ public class HostInfo extends BaseModel {
     /**
      * 主机ip
      */
+    @TableId
     private String hostIp;
 
     /**
@@ -42,6 +45,7 @@ public class HostInfo extends BaseModel {
     public void setHostIp(String hostIp) {
         this.hostIp = hostIp;
     }
+
     public String getHostName() {
         return hostName;
     }
@@ -49,6 +53,7 @@ public class HostInfo extends BaseModel {
     public void setHostName(String hostName) {
         this.hostName = hostName;
     }
+
     public LocalDateTime getLastBoot() {
         return lastBoot;
     }
@@ -56,6 +61,7 @@ public class HostInfo extends BaseModel {
     public void setLastBoot(LocalDateTime lastBoot) {
         this.lastBoot = lastBoot;
     }
+
     public LocalDateTime getLastHeart() {
         return lastHeart;
     }
@@ -67,10 +73,10 @@ public class HostInfo extends BaseModel {
     @Override
     public String toString() {
         return "HostInfo{" +
-            "hostIp=" + hostIp +
-            ", hostName=" + hostName +
-            ", lastBoot=" + lastBoot +
-            ", lastHeart=" + lastHeart +
-        "}";
+                "hostIp=" + hostIp +
+                ", hostName=" + hostName +
+                ", lastBoot=" + lastBoot +
+                ", lastHeart=" + lastHeart +
+                "}";
     }
 }
